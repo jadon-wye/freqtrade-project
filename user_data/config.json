@@ -1,0 +1,133 @@
+{
+    "$schema": "https://schema.freqtrade.io/schema.json",
+    "trading_mode": "spot",
+    "margin_mode": "isolated",
+    "max_open_trades": 5,
+    "stake_currency": "USDT",
+    "stake_amount": 200,
+    "tradable_balance_ratio": 1,
+    "fiat_display_currency": "USD",
+    "dry_run": true,
+    "timeframe": "3m",
+    "dry_run_wallet": 1000,
+    "cancel_open_orders_on_exit": true,
+    "unfilledtimeout": {
+        "entry": 10,
+        "exit": 30
+    },
+    "exchange": {
+        "name": "binance",
+        "key": "",
+        "secret": "",
+        "ccxt_config": {},
+        "ccxt_async_config": {},
+        "pair_whitelist": [
+            "BTC/USDT",
+            "ETH/USDT"
+        ],
+        "pair_blacklist": []
+    },
+    "entry_pricing": {
+        "price_side": "same",
+        "use_order_book": true,
+        "order_book_top": 1,
+        "price_last_balance": 0.0,
+        "check_depth_of_market": {
+            "enabled": false,
+            "bids_to_ask_delta": 1
+        }
+    },
+    "exit_pricing": {
+        "price_side": "other",
+        "use_order_book": true,
+        "order_book_top": 1
+    },
+    "pairlists": [
+        {
+            "method": "StaticPairList"
+        }
+    ],
+    "freqai": {
+        "enabled": false,
+        "purge_old_models": 2,
+        "train_period_days": 15,
+        "backtest_period_days": 7,
+        "live_retrain_hours": 0,
+        "identifier": "unique-id",
+        "feature_parameters": {
+            "include_timeframes": [
+                "3m",
+                "15m",
+                "1h"
+            ],
+            "include_corr_pairlist": [
+                "BTC/USDT",
+                "ETH/USDT"
+            ],
+            "label_period_candles": 20,
+            "include_shifted_candles": 2,
+            "DI_threshold": 0.9,
+            "weight_factor": 0.9,
+            "principal_component_analysis": false,
+            "use_SVM_to_remove_outliers": true,
+            "indicator_periods_candles": [
+                10,
+                20
+            ],
+            "plot_feature_importances": 0
+        },
+        "data_split_parameters": {
+            "test_size": 0.33,
+            "random_state": 1
+        },
+        "model_training_parameters": {}
+    },
+    "telegram": {
+        "enabled": false,
+        "token": "TELEGRAM_TOKEN_FROM_SECRETS",
+        "chat_id": "TELEGRAM_CHAT_ID_FROM_SECRETS",
+        "notification_settings": {
+            "status": "on",
+            "warning": "on",
+            "startup": "on",
+            "entry": "on",
+            "entry_fill": "on",
+            "exit": {
+                "roi": "off",
+                "emergency_exit": "off",
+                "force_exit": "off",
+                "exit_signal": "off",
+                "trailing_stop_loss": "off",
+                "stop_loss": "off",
+                "stoploss_on_exchange": "off",
+                "custom_exit": "off"
+            },
+            "exit_fill": "on",
+            "entry_cancel": "on",
+            "exit_cancel": "on",
+            "protection_trigger": "off",
+            "protection_trigger_global": "on",
+            "show_candle": "off"
+        },
+        "reload": true,
+        "balance_dust_level": 0.01
+    },
+    "api_server": {
+        "enabled": true,
+        "listen_ip_address": "0.0.0.0",
+        "listen_port": 8080,
+        "verbosity": "error",
+        "enable_openapi": false,
+        "jwt_secret_key": "JWT_SECRET_FROM_SECRETS",
+        "CORS_origins": [],
+        "username": "USERNAME_FROM_SECRETS",
+        "password": "PASSWORD_FROM_SECRETS",
+        "ws_token": "WS_TOKEN_FROM_SECRETS"
+    },
+    "bot_name": "demobot1",
+    "force_entry_enable": true,
+    "initial_state": "running",
+    "internals": {
+        "process_throttle_secs": 5
+    }
+}

@@ -1,0 +1,93 @@
+# Freqtrade 관련 제외 파일들
+
+# 민감한 정보 (API 키, 토큰 등)
+*.key
+*.secret
+user_data/config.secrets.json
+user_data/config.local.json
+
+# 데이터베이스 파일들
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.db
+
+# 로그 파일들
+user_data/logs/
+*.log
+
+# 백테스팅 결과 (용량이 큰 파일들)
+user_data/backtest_results/*.json
+user_data/backtest_results/*.html
+user_data/backtest_results/*.zip
+
+# 다운로드된 시장 데이터
+user_data/data/
+
+# FreqAI 모델 파일들
+user_data/freqaimodels/
+user_data/models/
+
+# 하이퍼옵트 결과
+user_data/hyperopt_results/
+
+# 플롯 파일들
+user_data/plot/
+
+# Python 관련
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# 환경 변수
+.env
+.venv
+env/
+venv/
+
+# IDE 관련
+.vscode/
+.idea/
+.kiro/
+*.swp
+*.swo
+
+# OS 관련
+.DS_Store
+Thumbs.db
+
+# 임시 파일
+*.tmp
+*.temp
+
+# Kiro가 생성한 임시 전략 실험 파일
+user_data/strategies/experiments/01_moving_average_kiro/
+
+# FreqAI 예시 전략 파일
+user_data/strategies/example/
+
+# ta-lib 설치 파일 제외
+*.whl
+ta_lib-*.whl
+
+user_data/hyperopts/sample_hyperopt_loss.py
