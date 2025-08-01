@@ -91,3 +91,6 @@ user_data/strategies/example/
 ta_lib-*.whl
 
 user_data/hyperopts/sample_hyperopt_loss.py
+
+# Freqai 전략 제외
+user_data/strategies/FreqaiExampleStrategy.py
