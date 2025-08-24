@@ -1,9 +1,13 @@
 """
-이동평균 크로스오버 전략 구현 V1.1
-V1.1 
-- V1.x 버전에서는 short, long 기간만 바꾸며 실험 예정
-- 실험에 용이하도록 각 파라미터별 변수화
-- ema short = 5
+이동평균 크로스오버 전략 구현 V1.1.2
+V1.1.2
+- ROI, stoploss 값으로 인해 수익 제한, 손실 극대화 확인 -> 해당 파라미터 수정
+- ROI, stoploss의 최적값을 찾는 것이 우선이라 판단 -> v1.1.1 ~ v1.1.9 버전으로 최적값 찾기 실험 수행
+- ROI = 0.005(빠른 익절), 0.01(기준 익절), 0.015(더 큰 수익추구)
+- stoploss = -0.03(빠른 손절), -0.05(중간 손절), -0.10(느린 손절)
+- 목표: 모든 경우의 수에 대한 최적값 도출
+- 이번 실험에서의 값: ROI = 0.005, stoploss = -0.05
+- ema short = 10(고정)
 - ema long = 50(고정)
 """
 
@@ -14,14 +18,14 @@ from functools import reduce
 
 class MovingAverageCrossStrategy(IStrategy):
     # 파라미터 선언
-    ema_short_period = IntParameter(5, 20, default=5, space="buy", optimize=False)
+    ema_short_period = IntParameter(5, 20, default=10, space="buy", optimize=False)
     ema_long_period = IntParameter(25, 100, default=50, space="buy", optimize=False)
 
     timeframe = '15m'
-    # set the initial stoploss to -10%
-    stoploss = -0.10
-    # exit profitable positions at any time when the profit is greater than 1%
-    minimal_roi = {"0": 0.01}
+    # stoploss값 -5% 중간 손절 설정 -> 손절 강화
+    stoploss = -0.05
+    # ROI값 0.5% 빠른 익절 설정
+    minimal_roi = {"0": 0.005}
 
     def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         # 동적 파라미터로 이동평균 계산
