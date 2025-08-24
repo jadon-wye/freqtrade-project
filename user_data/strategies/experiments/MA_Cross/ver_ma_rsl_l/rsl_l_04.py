@@ -1,10 +1,10 @@
 """
-이동평균 크로스오버 전략 구현 rsl_l_09
-rsl_l_09
+이동평균 크로스오버 전략 구현 rsl_l_04
+rsl_l_04
 - ROI = 0.005(빠른 익절), 0.01(기준 익절), 0.015(더 큰 수익추구)
 - stoploss = -0.03(빠른 손절), -0.05(중간 손절), -0.10(느린 손절)
 - 목표: EXIT => ROI & Stoploss only
-- 이번 실험에서의 값: ROI = 0.015, stoploss = -0.10
+- 이번 실험에서의 값: ROI = 0.01, stoploss = -0.03
 - ema short = 10(고정)
 - ema long = 50(고정)
 """
@@ -21,9 +21,9 @@ class MovingAverageCrossStrategy(IStrategy):
 
     timeframe = '15m'
  
-    stoploss = -0.10
+    stoploss = -0.03
 
-    minimal_roi = {"0": 0.015}
+    minimal_roi = {"0": 0.01}
 
     def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         # 동적 파라미터로 이동평균 계산
