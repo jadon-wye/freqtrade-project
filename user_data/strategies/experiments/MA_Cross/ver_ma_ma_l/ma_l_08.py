@@ -1,11 +1,11 @@
 """
-이동평균 크로스오버 전략 구현 ver_ma_ma_l_09
-ver_ma_ma_l_09
+이동평균 크로스오버 전략 구현 ver_ma_ma_l_08
+ver_ma_ma_l_08
 - MA 파라미터 최적화 실험
 - 진입 조건을 판단하는 골든크로스 실험이므로 exit_signal을 의도적으로 제거
 - 매도 신호는 오직 이전 실험에서의 최적값인 ROI/SL에 의해서만 결정
 - 목표: 단기 EMA / 장기 EMA 비율이 수익에 어떤 영향을 미치는가
-- 이번 실험에서의 값: (Short EMA, Long EMA) = (20, 100) => 극단적 거의 느림, 필터링 극대화 실험
+- 이번 실험에서의 값: (Short EMA, Long EMA) = (8, 80) => 극단적 불균형 (감지 실험용)
 - ROI = 0.015(고정)
 - loss = -0.10(고정)
 """
@@ -34,8 +34,8 @@ from functools import reduce
 
 class MovingAverageCrossStrategy(IStrategy):
     # 파라미터 선언
-    ema_short_period = IntParameter(5, 20, default=20, space="buy", optimize=False)
-    ema_long_period = IntParameter(25, 100, default=100, space="buy", optimize=False)
+    ema_short_period = IntParameter(5, 20, default=8, space="buy", optimize=False)
+    ema_long_period = IntParameter(25, 100, default=80, space="buy", optimize=False)
 
     timeframe = '15m' 
     stoploss = -0.10
