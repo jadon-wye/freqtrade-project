@@ -51,12 +51,15 @@ class MovingAverageCrossStrategy(IStrategy):
         short = self.ema_short_period.value
         long = self.ema_long_period.value
         
-        # 3캔들 연속 데드크로스일 경우 탈출(데드크로스 조건 완화)
-        cond1 = dataframe[f'ema{short}'] < dataframe[f'ema{long}']
-        cond2 = dataframe[f'ema{short}'].shift(1) < dataframe[f'ema{long}'].shift(1)
-        cond3 = dataframe[f'ema{short}'].shift(2) < dataframe[f'ema{long}'].shift(2)
-        cond4 = dataframe[f'ema{short}'].shift(3) < dataframe[f'ema{long}'].shift(3)
-        cond5 = dataframe[f'ema{short}'].shift(4) < dataframe[f'ema{long}'].shift(4)
+        # 데드크로스일 경우 매도 신호 생성
+        conditions = [] # 조건을 저장할 빈 리스트 생성
+        conditions.append(dataframe[f'ema{short}'] < dataframe[f'ema{long}']) # 데드크로스일 경우 True
+        conditions.append(dataframe[f'ema{short}'].shift(1) >= dataframe[f'ema{long}'].shift(1)) # 교차순간일 경우 True
+        conditions.append(dataframe[f'ema{short}'].notnull()) # 결측치 제거
 
-        dataframe.loc[cond1 & cond2 & cond3 & cond4 & cond5, 'exit_long'] = 1
+        if conditions:
+            dataframe.loc[
+                reduce(lambda x, y: x & y, conditions), 'exit_long'] = 1
+                # 모든 조건이 True인 행의 'enter_exit' 컬럼에 1(매도 신호) 할당
+        
         return dataframe

@@ -1,7 +1,8 @@
 """
 이동평균 크로스오버 전략 구현
-EX_COMP_02
+EX_COMP_03
 - exit_signal 복원 여부에 따른 전략 수익률 비교
+- 데드크로스 완화 조건 추가 (데드크로스 발생시 바로 탈출하는 것이 아닌 3캔들을 더 지켜보며 실제 하락장일 경우 탈출 진행)
 - 고정 파라미터: short_ema(10), long_ema(50), ROI(0.015), stoploss(-0.10), timeframe(15m)
 - EX_COMP_01: ROI + SL + exit_signal
 """
@@ -52,11 +53,9 @@ class MovingAverageCrossStrategy(IStrategy):
         long = self.ema_long_period.value
         
         # 3캔들 연속 데드크로스일 경우 탈출(데드크로스 조건 완화)
-        cond1 = dataframe[f'ema{short}'] < dataframe[f'ema{long}']
-        cond2 = dataframe[f'ema{short}'].shift(1) < dataframe[f'ema{long}'].shift(1)
-        cond3 = dataframe[f'ema{short}'].shift(2) < dataframe[f'ema{long}'].shift(2)
-        cond4 = dataframe[f'ema{short}'].shift(3) < dataframe[f'ema{long}'].shift(3)
-        cond5 = dataframe[f'ema{short}'].shift(4) < dataframe[f'ema{long}'].shift(4)
+        cond1 = dataframe[f'ema(short)'] < dataframe[f'ema(long)']
+        cond2 = dataframe[f'ema(short)'].shift(1) < dataframe[f'ema(long)'].shift(1)
+        cond3 = dataframe[f'ema(short)'].shift(2) < dataframe[f'ema(long)'].shift(2)
 
-        dataframe.loc[cond1 & cond2 & cond3 & cond4 & cond5, 'exit_long'] = 1
+        dataframe.loc[cond1 & cond2 & cond3, 'exit_long'] = 1
         return dataframe

@@ -1,7 +1,8 @@
 """
 이동평균 크로스오버 전략 구현
-EX_COMP_02
+EX_COMP_04
 - exit_signal 복원 여부에 따른 전략 수익률 비교
+- 데드크로스 완화 조건 추가 (데드크로스 발생시 지켜보는 캔들의 수 3개 -> 5개)
 - 고정 파라미터: short_ema(10), long_ema(50), ROI(0.015), stoploss(-0.10), timeframe(15m)
 - EX_COMP_01: ROI + SL + exit_signal
 """
@@ -51,7 +52,7 @@ class MovingAverageCrossStrategy(IStrategy):
         short = self.ema_short_period.value
         long = self.ema_long_period.value
         
-        # 3캔들 연속 데드크로스일 경우 탈출(데드크로스 조건 완화)
+        # 5캔들 연속 데드크로스일 경우 탈출(데드크로스 조건 완화)
         cond1 = dataframe[f'ema{short}'] < dataframe[f'ema{long}']
         cond2 = dataframe[f'ema{short}'].shift(1) < dataframe[f'ema{long}'].shift(1)
         cond3 = dataframe[f'ema{short}'].shift(2) < dataframe[f'ema{long}'].shift(2)
