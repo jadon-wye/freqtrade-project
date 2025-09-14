@@ -95,7 +95,7 @@ docker exec freqtrade freqtrade backtesting --config user_data/config.json --str
 
 ## 실험 진행 상황
 
-- [ ] 01. 이동평균 크로스오버
+- [O] 01. 이동평균 크로스오버
 - [ ] 02. RSI 과매수/과매도
 - [ ] 03. 볼린저밴드
 - [ ] 04. MACD
